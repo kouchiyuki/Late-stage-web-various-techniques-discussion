@@ -4,7 +4,7 @@ session_start(); // セッション開始
 // ログインしていない場合は、ログイン画面にリダイレクト
 if (empty($_SESSION['login_user_id'])) {
     header("HTTP/1.1 302 Found");
-    header("Location: ./login.php");
+    header("Location: ./login2.php");
     exit;
 }
 
@@ -131,7 +131,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['followee_user_id'])) {
                 <?php else: ?>
                     <!-- フォロー済みの場合、メッセージを表示 -->
                     <span style="margin-left: 1em; color: green; font-weight: bold;">フォロー済み</span>
-                <?php endif; ?>
+	            <a
+		    href="/follow_remove.php?followee_user_id=<?=$user['id'] ?>"
+		    style="margin-left: 0.5em; color: red;"
+                    >
+		    フォロー解除</a>
+<?php endif; ?>
             </div>
             <hr style="border: none; border-bottom: 1px solid gray;">
         <?php endforeach; ?>
