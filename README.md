@@ -32,31 +32,65 @@ sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 docker compose version
 
 # GitHubからプロジェクトをクローン
-git clone 
+git clone https://github.com/kouchiyuki/Late-stage-web-various-techniques-discussion.git
 
 # プロジェクトのディレクトリに移動
-cd -1-2-/public
+cd /Late-stage-web-various-techniques-discussion/public
 
 # コンテナのビルドと起動
 docker-compose up -d --build
 
-# MySQLコンテナに接続し、`bbs_entries`テーブルを作成
-※【重要】私が作成したものはmysql2と名前を付けています。！！！
-docker-compose exec mysql2 mysql -u root -pexample_password example_db -e "CREATE TABLE IF NOT EXISTS bbs_entries (id INT AUTO_INCREMENT PRIMARY KEY, body TEXT NOT NULL, image_filename VARCHAR(255), created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);"
+# MySQLコンテナに接続し、`テーブルを作成
+docker compose exec mysql mysql -u root -pexample_password example_db -e "
+
+1. 会員テーブル
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255),
+    salt VARCHAR(255),
+    icon_filename VARCHAR(255),
+    cover_filename VARCHAR(255),
+    self_introduction TEXT,
+    introduction TEXT,
+    birthday DATE,
+    birth_year INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+2. フォロー関係テーブル
+CREATE TABLE IF NOT EXISTS user_relationships (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    followee_user_id INT NOT NULL,
+    follower_user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+3. 掲示板投稿テーブル
+CREATE TABLE IF NOT EXISTS bbs_entries (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    body TEXT,
+    image_filename VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 #すべてのセットアップが完了したら、ブラウザでhttp://<EC2インスタンスのパブリックIP>にアクセスして、掲示板の画面が表示されることを確認してください。
 
 
 #ファイル構成
-.
-├── -1-2-/
+├── dockertest/
 │   ├── public/
-│   │   ├── finalassignment2.php
-│   │   ├── enshu1_view.php
-│   │   ├── bbsimagetest.php
+│   │   ├── timeline.php      <-- 今回のメイン
+│   │   ├── users.php         <-- 会員一覧・検索
+│   │   ├── follow_remove.php <-- フォロー解除
+│   │   ├── login2.php        <-- ログイン画面
+│   │   └── setting/          <-- プロフィール設定フォルダ
 │   ├── nginx/
-│   │   └── conf.d
-|   |    　　└── default.conf
+│   │   └── conf.d/
+│   │        └── default.conf
 │   ├── Dockerfile
+│   ├── php.ini
 │   └── compose.yml
 └── README.md
