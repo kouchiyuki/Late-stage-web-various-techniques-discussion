@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (empty($_SESSION['login_user_id'])) {
-    header("Location: ../1022/login.php");
+    header("Location: ../login2.php");
     exit;
 }
 
@@ -26,12 +26,18 @@ if (!empty($_POST['cover_base64'])) {
 }
 ?>
 
+<h1>カバー画像設定</h1>
 <form method="POST">
     <input type="file" id="coverInput" accept="image/*">
     <input type="hidden" name="cover_base64" id="coverBase64">
     <canvas id="coverCanvas" style="display:none;"></canvas>
     <button type="submit">アップロード</button>
 </form>
+<div style="margin-top: 1em;">
+  <a href="/setting/index.php" style="display: inline-block; padding: 0.5em 1em; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em;">
+    戻る
+  </a>
+</div>
 
 <script>
 document.getElementById("coverInput").addEventListener("change", function(){

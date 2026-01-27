@@ -2,7 +2,7 @@
 session_start();
 if (empty($_SESSION['login_user_id'])) {
   header("HTTP/1.1 302 Found");
-  header("Location: /login.php");
+  header("Location: ../login2.php");
   return;
 }
 // DBに接続
@@ -27,7 +27,6 @@ if (isset($_POST['introduction'])) {
   return;
 }
 ?>
-<a href="./index.php">設定一覧に戻る</a>
 
 <h1>自己紹介設定</h1>
 <form method="POST">
@@ -41,3 +40,9 @@ if (isset($_POST['introduction'])) {
   自己紹介文の設定処理が完了しました。
 </div>
 <?php endif; ?>
+
+<div style="margin-top: 1em;">
+  <a href="/setting/index.php" style="display: inline-block; padding: 0.5em 1em; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em;">
+    戻る
+  </a>
+</div>

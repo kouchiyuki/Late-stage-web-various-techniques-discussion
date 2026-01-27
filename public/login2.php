@@ -17,10 +17,10 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
         exit;
     }
 
-    // ソルトを取得し、パスワード + ソルトで再度ハッシュ
+    // パスワードとソルトで再度ハッシュ
     $input_hashed_password = hash('sha256', $_POST['password'] . $user['salt']);
 
-    // ハッシュが一致するか確認
+    // ハッシュが一致するかの確認
     if ($input_hashed_password !== $user['password']) {
         // パスワード不一致
         header("HTTP/1.1 303 See Other");

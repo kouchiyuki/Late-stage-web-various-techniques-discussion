@@ -2,7 +2,7 @@
 session_start();
 if (empty($_SESSION['login_user_id'])) {
   header("HTTP/1.1 302 Found");
-  header("Location: /login.php");
+  header("Location: /login2.php");
   return;
 }
 
@@ -59,6 +59,10 @@ if (isset($_POST['image_base64'])) {
   <canvas id="imageCanvas" style="display: none;"></canvas><!-- 画像縮小に使うcanvas (非表示) -->
   <button type="submit">アップロード</button>
 </form>
+<div style="margin-top: 1em;">
+  <a href="/setting/index.php" style="display: inline-block; padding: 0.5em 1em; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em;">
+    戻る
+  </a>
 <hr>
 
 <script>

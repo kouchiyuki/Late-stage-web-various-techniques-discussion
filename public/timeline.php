@@ -2,13 +2,13 @@
 $dbh = new PDO('mysql:host=mysql;dbname=example_db', 'root', '');
 
 session_start();
-if (empty($_SESSION['login_user_id'])) { // 非ログインの場合利用不可
+if (empty($_SESSION['login_user_id'])) {
   header("HTTP/1.1 302 Found");
-  header("Location: /login.php");
+  header("Location: /login2.php");
   return;
 }
 
-// 現在のログイン情報を取得する
+// 現在のログイン情報を取得
 $user_select_sth = $dbh->prepare("SELECT * from users WHERE id = :id");
 $user_select_sth->execute([':id' => $_SESSION['login_user_id']]);
 $user = $user_select_sth->fetch();
@@ -18,13 +18,12 @@ if (isset($_POST['body']) && !empty($_SESSION['login_user_id'])) {
 
   $image_filename = null;
   if (!empty($_POST['image_base64'])) {
-    // 先頭の data:~base64, のところは削る
     $base64 = preg_replace('/^data:.+base64,/', '', $_POST['image_base64']);
 
     // base64からバイナリにデコードする
     $image_binary = base64_decode($base64);
 
-    // 新しいファイル名を決めてバイナリを出力する
+    // 新しいファイル名を決めて出力する
     $image_filename = strval(time()) . bin2hex(random_bytes(25)) . '.png';
     $filepath =  '/var/www/upload/image/' . $image_filename;
     file_put_contents($filepath, $image_binary);
@@ -33,19 +32,17 @@ if (isset($_POST['body']) && !empty($_SESSION['login_user_id'])) {
   // insertする
   $insert_sth = $dbh->prepare("INSERT INTO bbs_entries (user_id, body, image_filename) VALUES (:user_id, :body, :image_filename)");
   $insert_sth->execute([
-    ':user_id' => $_SESSION['login_user_id'], // ログインしている会員情報の主キー
-    ':body' => $_POST['body'], // フォームから送られてきた投稿本文
-    ':image_filename' => $image_filename, // 保存した画像の名前 (nullの場合もある)
+    ':user_id' => $_SESSION['login_user_id'],
+    ':body' => $_POST['body'],//投稿内容 
+    ':image_filename' => $image_filename,//画像の名前
   ]);
 
-  // 処理が終わったらリダイレクトする
-  // リダイレクトしないと，リロード時にまた同じ内容でPOSTすることになる
   header("HTTP/1.1 303 See Other");
   header("Location: ./timeline.php");
   return;
 }
 
-// 投稿データを取得。
+// 投稿データ取得
 // フォローしている人の投稿と自分自身の投稿のみ表示
 $sql = 'SELECT bbs_entries.*, users.name AS user_name, users.icon_filename AS user_icon_filename'
   . ' FROM bbs_entries'
@@ -58,14 +55,10 @@ $select_sth->execute([
   ':login_user_id' => $_SESSION['login_user_id'],
 ]);
 
-// bodyのHTMLを出力するための関数を用意する
 function bodyFilter (string $body): string
 {
-  $body = htmlspecialchars($body); // エスケープ処理
-  $body = nl2br($body); // 改行文字を<br>要素に変換
-
-  // >>1 といった文字列を該当番号の投稿へのページ内リンクとする (レスアンカー機能)
-  // 「>」(半角の大なり記号)は htmlspecialchars() でエスケープされているため注意
+  $body = htmlspecialchars($body);//エスケープ処理
+  $body = nl2br($body);
   $body = preg_replace('/&gt;&gt;(\d+)/', '<a href="#entry$1">&gt;&gt;$1</a>', $body);
 
   return $body;
@@ -80,15 +73,15 @@ function bodyFilter (string $body): string
   /
   <a href="/users.php">会員一覧画面</a>
 </div>
-<!-- フォームのPOST先はこのファイル自身にする -->
-<form method="POST" action="./timeline.php"><!-- enctypeは外しておきましょう -->
+
+<form method="POST" action="./timeline.php">
   <textarea name="body" required></textarea>
   <div style="margin: 1em 0;">
     <input type="file" accept="image/*" name="image" id="imageInput">
   </div>
-  <input id="imageBase64Input" type="hidden" name="image_base64"><!-- base64を送る用のinput (非表示) -->
-  <canvas id="imageCanvas" style="display: none;"></canvas><!-- 画像縮小に使うcanvas (非表示) -->
-  <button type="submit">送信</button>
+  <input id="imageBase64Input" type="hidden" name="image_base64">
+  <canvas id="imageCanvas" style="display: none;"></canvas>
+  <button type="submit">ポストする</button>
 </form>
 <hr>
 
@@ -133,39 +126,39 @@ document.addEventListener("DOMContentLoaded", () => {
   const imageInput = document.getElementById("imageInput");
   imageInput.addEventListener("change", () => {
     if (imageInput.files.length < 1) {
-      // 未選択の場合
+      // 未選択
       return;
     }
 
     const file = imageInput.files[0];
-    if (!file.type.startsWith('image/')){ // 画像でなければスキップ
+    if (!file.type.startsWith('image/')){
       return;
     }
 
     // 画像縮小処理
     const imageBase64Input = document.getElementById("imageBase64Input"); // base64を送るようのinput
-    const canvas = document.getElementById("imageCanvas"); // 描画するcanvas
+    const canvas = document.getElementById("imageCanvas");
     const reader = new FileReader();
     const image = new Image();
-    reader.onload = () => { // ファイルの読み込み完了したら動く処理を指定
-      image.onload = () => { // 画像として読み込み完了したら動く処理を指定
+    reader.onload = () => {
+      image.onload = () => {
 
         // 元の縦横比を保ったまま縮小するサイズを決めてcanvasの縦横に指定する
-        const originalWidth = image.naturalWidth; // 元画像の横幅
-        const originalHeight = image.naturalHeight; // 元画像の高さ
-        const maxLength = 1000; // 横幅も高さも1000以下に縮小するものとする
-        if (originalWidth <= maxLength && originalHeight <= maxLength) { // どちらもmaxLength以下の場合そのまま
+        const originalWidth = image.naturalWidth;
+        const originalHeight = image.naturalHeight;
+        const maxLength = 1000;
+        if (originalWidth <= maxLength && originalHeight <= maxLength) {
             canvas.width = originalWidth;
             canvas.height = originalHeight;
-        } else if (originalWidth > originalHeight) { // 横長画像の場合
+        } else if (originalWidth > originalHeight) {
             canvas.width = maxLength;
             canvas.height = maxLength * originalHeight / originalWidth;
-        } else { // 縦長画像の場合
+        } else {
             canvas.width = maxLength * originalWidth / originalHeight;
             canvas.height = maxLength;
         }
 
-        // canvasに実際に画像を描画 (canvasはdisplay:noneで隠れているためわかりにくいが...)
+        // canvasに実際に画像を描画
         const context = canvas.getContext("2d");
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
 

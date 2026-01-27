@@ -3,7 +3,7 @@ session_start();
 
 if (empty($_SESSION['login_user_id'])) {
   header("HTTP/1.1 302 Found");
-  header("Location: ./login.php");
+  header("Location: ./login2.php");
   return;
 }
 

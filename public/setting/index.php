@@ -2,7 +2,7 @@
 session_start();
 if (empty($_SESSION['login_user_id'])) {
   header("HTTP/1.1 302 Found");
-  header("Location: /login.php");
+  header("Location: /login2.php");
   return;
 }
 // DBに接続
@@ -19,7 +19,7 @@ $user = $select_sth->fetch();
 <p>
   現在の設定
 </p>
-<dl> <!-- 登録情報を出力する際はXSS防止のため htmlspecialchars() を必ず使いましょう -->
+<dl>
   <dt>ID</dt>
   <dd><?= htmlspecialchars($user['id']) ?></dd>
   <dt>メールアドレス</dt>
@@ -30,7 +30,6 @@ $user = $select_sth->fetch();
 <ul>
   <li><a href="./icon.php">アイコン設定</a></li>
   <li><a href="./introduction.php">自己紹介文設定</a></li>
-  <li><a href="./icon.php">アイコン設定</a></li>
   <li><a href="./cover.php">カバー画像設定</a></li>
   <li><a href="./birthday.php">生年月日を設定</a></li>
 </ul>

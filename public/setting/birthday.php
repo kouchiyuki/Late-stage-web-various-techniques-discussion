@@ -31,4 +31,8 @@ $birthday = $user['birthday'] ?? '';
     </label>
     <button type="submit">保存</button>
 </form>
-
+<div style="margin-top: 1em;">
+  <a href="/setting/index.php" style="display: inline-block; padding: 0.5em 1em; background-color: #6c757d; color: white; text-decoration: none; border-radius: 4px; font-size: 0.9em;">
+    戻る
+  </a>
+</div>

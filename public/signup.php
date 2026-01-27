@@ -29,7 +29,7 @@ if (
     exit;
   }
 
-  // salt生成
+  // salt
   $salt = bin2hex(random_bytes(16));
 
   // パスワードを salt 付きでハッシュ
@@ -48,7 +48,6 @@ if (
     ':salt'     => $salt,
   ]);
 
-  // 完了画面へ
   header("HTTP/1.1 303 See Other");
   header("Location: ./signup_finish.php");
   exit;
