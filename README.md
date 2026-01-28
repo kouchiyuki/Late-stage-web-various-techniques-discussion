@@ -2,6 +2,7 @@
 # Late-stage-web-various-techniques-discussion
 
 Web各種技術議論の後期提出物です。
+※Wed1-2_finaltaskは削除できなかっただけなので、無視してください。
 
 ---
 
