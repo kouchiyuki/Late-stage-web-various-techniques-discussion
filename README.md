@@ -1,6 +1,4 @@
----
 
-````md
 # Late-stage-web-various-techniques-discussion
 
 Web各種技術議論の後期提出物です。
