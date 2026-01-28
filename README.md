@@ -169,6 +169,11 @@ http://<EC2インスタンスのパブリックIP>
 │   │   ├── follow_remove.php # フォロー解除
 │   │   ├── login2.php        # ログイン画面
 │   │   └── setting/          # プロフィール設定フォルダ
+│   │       ├── birthday.php　　　　#生年月日設定
+│   │       ├── cover.php          #カバー画像設定
+│   │       ├── icon.php           #アイコン設定
+│   │       ├── index.php          #設定画面トップ
+│   │       └── introduction.php   #自己紹介文設定
 │   ├── nginx/
 │   │   └── conf.d/
 │   │        └── default.conf
