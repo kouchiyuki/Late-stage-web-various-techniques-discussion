@@ -41,23 +41,24 @@ cd /Late-stage-web-various-techniques-discussion/public
 docker-compose up -d --build
 
 ### MySQLコンテナに接続し、テーブルを作成
-docker compose exec mysql mysql -u root -pexample_password example_db -e "
+docker compose exec mysql mysql -u root -pexample_password example_db
 
-1. 会員テーブル
+会員テーブル
 CREATE TABLE IF NOT EXISTS users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255),
-    email VARCHAR(255),
-    password VARCHAR(255),
-    salt VARCHAR(255),
-    icon_filename VARCHAR(255),
-    cover_filename VARCHAR(255),
-    self_introduction TEXT,
-    introduction TEXT,
-    birthday DATE,
-    birth_year INT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255),
+  email VARCHAR(255),
+  password VARCHAR(255),
+  salt VARCHAR(255),
+  icon_filename VARCHAR(255),
+  cover_filename VARCHAR(255),
+  self_introduction TEXT,
+  introduction TEXT,
+  birthday DATE,
+  birth_year INT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 2. フォロー関係テーブル
 CREATE TABLE IF NOT EXISTS user_relationships (
