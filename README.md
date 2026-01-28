@@ -43,7 +43,9 @@ docker-compose up -d --build
 ### MySQLコンテナに接続し、テーブルを作成
 docker compose exec mysql mysql -u root -pexample_password example_db
 
-会員テーブル
+### 会員テーブル（users）
+
+```sql
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255),
@@ -58,36 +60,55 @@ CREATE TABLE IF NOT EXISTS users (
   birth_year INT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
+### フォロー関係テーブル（user_relationships）
 
-2. フォロー関係テーブル
+```sql
 CREATE TABLE IF NOT EXISTS user_relationships (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    followee_user_id INT NOT NULL,
-    follower_user_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  followee_user_id INT NOT NULL,
+  follower_user_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
-3. 掲示板投稿テーブル
+### 掲示板投稿テーブル（bbs_entries）
+
+```sql
 CREATE TABLE IF NOT EXISTS bbs_entries (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    body TEXT,
-    image_filename VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  body TEXT,
+  image_filename VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
-#すべてのセットアップが完了したら、ブラウザでhttp://<EC2インスタンスのパブリックIP>にアクセスして、掲示板の画面が表示されることを確認してください。
+---
 
+## 5. 動作確認
 
-#ファイル構成
+すべてのセットアップが完了したら、以下のURLにアクセスしてください。
+
+```
+http://<EC2インスタンスのパブリックIP>
+```
+
+掲示板の画面が表示されれば成功です。
+
+---
+
+## ファイル構成
+
+```text
 ├── dockertest/
 │   ├── public/
-│   │   ├── timeline.php      <-- 今回のメイン
-│   │   ├── users.php         <-- 会員一覧・検索
-│   │   ├── follow_remove.php <-- フォロー解除
-│   │   ├── login2.php        <-- ログイン画面
-│   │   └── setting/          <-- プロフィール設定フォルダ
+│   │   ├── timeline.php      # 今回のメイン
+│   │   ├── users.php         # 会員一覧・検索
+│   │   ├── follow_remove.php # フォロー解除
+│   │   ├── login2.php        # ログイン画面
+│   │   └── setting/          # プロフィール設定フォルダ
 │   ├── nginx/
 │   │   └── conf.d/
 │   │        └── default.conf
@@ -95,3 +116,9 @@ CREATE TABLE IF NOT EXISTS bbs_entries (
 │   ├── php.ini
 │   └── compose.yml
 └── README.md
+```
+
+```
+
+---
+
