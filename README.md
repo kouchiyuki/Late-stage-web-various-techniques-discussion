@@ -145,17 +145,3 @@ CREATE TABLE IF NOT EXISTS bbs_entries (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
-
----
-
-## 5. 動作確認
-
-すべてのセットアップが完了したら、以下のURLにアクセスしてください。
-
-```
-http://<EC2インスタンスのパブリックIP>
-```
-
-掲示板の画面が表示されれば成功です。
-
----
