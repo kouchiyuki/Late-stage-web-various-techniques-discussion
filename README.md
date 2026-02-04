@@ -159,27 +159,3 @@ http://<EC2インスタンスのパブリックIP>
 掲示板の画面が表示されれば成功です。
 
 ---
-
-## ファイル構成
-
-```text
-├── dockertest/
-│   ├── public/
-│   │   ├── timeline.php      # 今回のメイン
-│   │   ├── users.php         # 会員一覧・検索
-│   │   ├── follow_remove.php # フォロー解除
-│   │   ├── login2.php        # ログイン画面
-│   │   └── setting/          # プロフィール設定フォルダ
-│   │       ├── birthday.php　　　　#生年月日設定
-│   │       ├── cover.php          #カバー画像設定
-│   │       ├── icon.php           #アイコン設定
-│   │       ├── index.php          #設定画面トップ
-│   │       └── introduction.php   #自己紹介文設定
-│   ├── nginx/
-│   │   └── conf.d/
-│   │        └── default.conf
-│   ├── Dockerfile
-│   ├── php.ini
-│   └── compose.yml
-└── README.md
-```
