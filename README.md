@@ -63,6 +63,13 @@ docker compose version
 
 ## 3. プロジェクトのセットアップ
 
+#### ※Git がインストールされていない場合
+
+```bash
+sudo yum install -y git
+git --version
+```
+
 ### 3.1 GitHubからプロジェクトをクローン
 
 ```bash
@@ -79,13 +86,6 @@ cd Late-stage-web-various-techniques-discussion/public
 
 ```bash
 docker-compose up -d --build
-```
-
-#### Git がインストールされていない場合
-
-```bash
-sudo yum install -y git
-git --version
 ```
 
 ---
