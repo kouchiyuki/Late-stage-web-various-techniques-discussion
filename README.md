@@ -21,20 +21,14 @@ Web各種技術議論の後期提出物です。
 sudo yum install -y docker
 ````
 
-### 1.2 Dockerサービスを起動
-
-```bash
-sudo systemctl start docker
-```
-
-### 1.3 システム起動時にDockerが自動で起動するように設定
+### 1.2 システム起動時にDockerが自動で起動するように設定
 
 ```bash
 sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-### 1.4 Dockerコマンドを `ec2-user` で sudo なしで実行できるようにする
+### 1.3 Dockerコマンドを `ec2-user` で sudo なしで実行できるようにする
 
 ```bash
 sudo usermod -a -G docker ec2-user
