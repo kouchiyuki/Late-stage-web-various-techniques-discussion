@@ -95,7 +95,7 @@ docker-compose up -d --build
 ### 4.1 MySQLコンテナに接続
 
 ```bash
-docker compose exec mysql mysql -u root -pexample_password example_db
+docker compose exec mysql mysql example_db
 ```
 
 ### 4.2 会員テーブル（users）
