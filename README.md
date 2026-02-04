@@ -81,6 +81,13 @@ cd Late-stage-web-various-techniques-discussion/public
 docker-compose up -d --build
 ```
 
+#### Git がインストールされていない場合
+
+```bash
+sudo yum install -y git
+git --version
+```
+
 ---
 
 ## 4. データベースの初期設定
