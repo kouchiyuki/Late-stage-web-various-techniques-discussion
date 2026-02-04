@@ -120,22 +120,22 @@ CREATE TABLE IF NOT EXISTS users (
 ### 4.3 フォロー関係テーブル（user_relationships）
 
 ```sql
-CREATE TABLE IF NOT EXISTS user_relationships (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  followee_user_id INT NOT NULL,
-  follower_user_id INT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `user_relationships` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `followee_user_id` INT UNSIGNED NOT NULL,
+    `follower_user_id` INT UNSIGNED NOT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 ```
 
 ### 4.4 掲示板投稿テーブル（bbs_entries）
 
 ```sql
-CREATE TABLE IF NOT EXISTS bbs_entries (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT,
-  body TEXT,
-  image_filename VARCHAR(255),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE `bbs_entries` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT UNSIGNED NOT NULL,
+    `body` TEXT NOT NULL,
+    `image_filename` TEXT DEFAULT NULL,
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 ```
