@@ -15,26 +15,26 @@ Web各種技術議論の後期提出物です。
 
 以下のコマンドを実行して、Dockerをインストールし、システム起動時に自動で立ち上がるように設定します。
 
-### Dockerをインストール
+### 1.1 Dockerをインストール
 
 ```bash
 sudo yum install -y docker
 ````
 
-### Dockerサービスを起動
+### 1.2 Dockerサービスを起動
 
 ```bash
 sudo systemctl start docker
 ```
 
-### システム起動時にDockerが自動で起動するように設定
+### 1.3 システム起動時にDockerが自動で起動するように設定
 
 ```bash
 sudo systemctl start docker
 sudo systemctl enable docker
 ```
 
-### Dockerコマンドを `ec2-user` で sudo なしで実行できるようにする
+### 1.4 Dockerコマンドを `ec2-user` で sudo なしで実行できるようにする
 
 ```bash
 sudo usermod -a -G docker ec2-user
@@ -46,26 +46,26 @@ sudo usermod -a -G docker ec2-user
 
 ## 2. Docker Compose のインストール
 
-### Docker Composeをインストールするディレクトリを作成
+### 2.1 Docker Composeをインストールするディレクトリを作成
 
 ```bash
 sudo mkdir -p /usr/local/lib/docker/cli-plugins/
 ```
 
-### Docker Composeのバイナリファイルをダウンロード
+### 2.2 Docker Composeのバイナリファイルをダウンロード
 
 ```bash
 sudo curl -SL https://github.com/docker/compose/releases/download/v2.36.0/docker-compose-linux-x86_64 \
 -o /usr/local/lib/docker/cli-plugins/docker-compose
 ```
 
-### 実行権限を付与
+### 2.3 実行権限を付与
 
 ```bash
 sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 ```
 
-### インストール確認
+### 2.4 インストール確認
 
 ```bash
 docker compose version
@@ -75,19 +75,19 @@ docker compose version
 
 ## 3. プロジェクトのセットアップ
 
-### GitHubからプロジェクトをクローン
+### 3.1 GitHubからプロジェクトをクローン
 
 ```bash
 git clone https://github.com/kouchiyuki/Late-stage-web-various-techniques-discussion.git
 ```
 
-### プロジェクトのディレクトリに移動
+### 3.2 プロジェクトのディレクトリに移動
 
 ```bash
 cd Late-stage-web-various-techniques-discussion/public
 ```
 
-### コンテナのビルドと起動
+### 3.3 コンテナのビルドと起動
 
 ```bash
 docker-compose up -d --build
@@ -97,13 +97,13 @@ docker-compose up -d --build
 
 ## 4. データベースの初期設定
 
-### MySQLコンテナに接続
+### 4.1 MySQLコンテナに接続
 
 ```bash
 docker compose exec mysql mysql -u root -pexample_password example_db
 ```
 
-### 会員テーブル（users）
+### 4.2 会員テーブル（users）
 
 ```sql
 CREATE TABLE IF NOT EXISTS users (
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 ```
 
-### フォロー関係テーブル（user_relationships）
+### 4.3 フォロー関係テーブル（user_relationships）
 
 ```sql
 CREATE TABLE IF NOT EXISTS user_relationships (
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS user_relationships (
 );
 ```
 
-### 掲示板投稿テーブル（bbs_entries）
+### 4.4 掲示板投稿テーブル（bbs_entries）
 
 ```sql
 CREATE TABLE IF NOT EXISTS bbs_entries (
