@@ -34,7 +34,7 @@ sudo systemctl enable docker
 sudo usermod -a -G docker ec2-user
 ```
 
-※ 設定反映のため、ログアウト・再ログインしてください。
+※ 設定反映のため、ログアウトしてください。
 
 ---
 
